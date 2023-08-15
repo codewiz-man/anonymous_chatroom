@@ -1,0 +1,133 @@
+<!-- 
+Online HTML, CSS and JavaScript editor to run code online.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Browser</title>
+  <style>
+  	body {
+      margin: 10px;
+      font-family: Arial;
+      color: #323232;
+    }
+
+    .C_chat-container {
+         position: relative;
+         display: inline-block;
+         width: calc(100% - 20px);
+         height: calc(100vh - 20px);
+    }
+
+    .C_chat-header {
+         width: 100%;
+         text-align : center;
+         font-weight: bold;
+         height: 50px;
+    }
+
+    .C_chat-body {
+         width: 100%; height: calc(100vh - 120px); 
+    }
+
+    .C_chat-input {
+        height: 50px; position: relative;
+    }
+
+    .C_chat-input * {
+        float: left;
+        border-radius: 10px;
+    }
+
+    .C_chat {
+        clear: both; white-space: nowrap; padding: 10px; background-color: #e0e0e0; 
+        border-radius: 10px; float: left; margin-bottom: 3px;
+    }
+    
+    .C_chat-right {
+    	float: right !important;
+        background-color: #645678; color: #fff;
+    }
+
+    input[type=text] {
+      padding: 10px; width: calc(100% - 105px);
+    }
+
+    .C_button {
+        min-width: 50px; max-width: 100px;
+        padding: 10px; background-color: #777; 
+        color: #fff; letter-spacing: .5px; border-radius: 10px;
+      margin-left: 5px; margin-right: 5px; cursor: pointer;
+    }
+
+  </style>
+</head>
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+<body>
+  <div class="C_chat-container" ng-app="chat_app" ng-controller="chat_ctrl">
+    	<div class="C_chat-header">
+          Chat UI
+        </div>
+        <div class="C_chat-body">
+           <div class="C_chat" ng-repeat="msg in msgs" ng-class="{'C_chat-right': msg.from==='self'}">
+             {{msg.msg}}
+           </div>
+        </div>
+        <div class="C_chat-input">
+              <input type="text" ng-model="model_chat_input" placeholder="Type and Enter"/>
+          <div class="C_button" ng-click="updateMsg()">
+            submit
+          </div>
+            
+    	</div>
+  </div>
+  
+  <script>
+    console.log("from script file");
+
+    var app = angular.module('chat_app', []);
+    app.controller('chat_ctrl', function($scope) {
+
+      $scope.msgs = [
+        { "from": "self",
+          "msg": "hello"
+        },
+        {
+         "from":"server",
+          "msg": "hello, how r u doin?"
+        },
+        { "from": "self",
+          "msg": "hello"
+        },
+        {
+         "from":"server",
+          "msg": "hello, how r u doin?"
+        }
+      ];
+      
+      $scope.updateMsg = function() {
+          if($scope.model_chat_input == undefined) {
+              return;
+          }
+          //alert($scope.model_chat_input);
+          const choices = ["self", "server"];
+          const u = Math.floor(Math.random() * choices.length);
+          dat = {};
+          dat["from"] = choices[u];
+          dat["msg"] = $scope.model_chat_input;
+          $scope.msgs.push(dat);
+          console.log($scope.msgs);
+          //$scope.$apply();
+      }
+});
+  </script>
+  
+</body>
+
+</html>
