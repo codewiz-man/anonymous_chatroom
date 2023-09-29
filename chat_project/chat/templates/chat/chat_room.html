@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anonymous Chat - {{ group_name }}</title>
+</head>
+<body>
+    <h1>{{ group_name }}</h1>
+    <div>
+        {% for msg in messages %}
+            <p> {{msg.user}} </p>
+            <p> {{msg.content}} </p>
+            <p>  {{msg.timestamp}} </p>
+            <p></p>
+        {% endfor %}
+    </div>
+
+    <div id="chat"></div>
+    <input id="message-input" type="text" placeholder="Type a message...">
+    <button id="send-button">Send</button>
+
+    <script>
+        // Your WebSocket JavaScript code here
+    </script>
+</body>
+</html>
