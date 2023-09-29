@@ -1,9 +1,9 @@
 {% for group in chat_groups %}
-    <div class="C_chat_group">
+    <a class="C_chat_group" href="chat/{{group.name}}">
         <p> {{group.name}} </p>
         <a href="delete_group/{{group.name}}/"> delete </a>
         <p></p>
-    </div>
+    </a>
     
 {% endfor %}
 
@@ -21,3 +21,7 @@
       </div>
     </div>
 </form>
+
+<script>
+
+</script>
