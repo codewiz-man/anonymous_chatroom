@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anonymous Chat - {{ group_name }}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browser</title>
+    <style>
+        body {
+            margin: 10px;
+            font-family: Arial;
+            color: #323232;
+        }
+    
+        .C_chat-container {
+            position: relative;
+            display: inline-block;
+            width: calc(100% - 20px);
+            height: calc(100vh - 20px);
+        }
+    
+        .C_chat-header {
+            width: 100%;
+            text-align : center;
+            font-weight: bold;
+            height: 50px;
+        }
+    
+        .C_chat-body {
+            width: 100%; height: calc(100vh - 120px); 
+        }
+    
+        .C_chat-input {
+            height: 50px; position: relative;
+        }
+    
+        .C_chat-input * {
+            float: left;
+            border-radius: 10px;
+        }
+    
+        .C_chat {
+            clear: both; white-space: nowrap; padding: 10px; background-color: #e0e0e0; 
+            border-radius: 10px; float: left; margin-bottom: 3px; max-width: 300px; height: auto;
+        }
+        
+        .C_chat-right {
+            float: right !important;
+            background-color: #645678; color: #fff;
+        }
+    
+        input[type=text] {
+            padding: 10px; width: calc(100% - 105px);
+        }
+    
+        .C_button {
+            min-width: 50px; max-width: 100px;
+            padding: 5px; background-color: #777; 
+            color: #fff; letter-spacing: .5px; border-radius: 10px;
+            margin-left: 5px; margin-right: 5px; cursor: pointer;
+        }
+
+        .C_main {
+            width: 100vw; height: auto; position: relative;
+        }
+
+        @media only screen and (min-width: 640px) {
+            .C_main {
+                width: 60vw; margin: auto;
+            }
+        }
+    
+    </style>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div class="C_main">
+        {% block content %}
+        
+        {% endblock content %}
+    </div>
+
+</body>
+</html>

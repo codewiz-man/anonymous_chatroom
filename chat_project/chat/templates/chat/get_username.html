@@ -1,0 +1,48 @@
+{% extends "chat/base.html" %}
+
+{% block content %}
+
+    <form method="post" action="{% url 'get_username' %}" id="id_login_form">
+        {% csrf_token %}
+        <label for="id_username-input" > Username </label> <br>
+        <input type="text" name="username" id="id_username-input" placeholder="username">
+        <!-- {{ form.password.label_tag }}
+        {{ form.password }} 
+        <div class="form-check">
+            <input type="checkbox" name="remember_me" id="remember-me">
+            <label for="remember-me">Remember Me</label>
+        </div> -->
+        <button class="C_button" type="submit">get username</button>
+        <p id="id_login-text"> </p>
+    </form>
+
+   
+    <script>
+        $(document).ready(function() {
+            $('#id_username-input').on('input', function() {
+                var username = $(this).val();
+                console.log(username);
+                if (username.length >= 3) {  // Adjust the minimum length as needed
+                    $.ajax({
+                        url: '/chat_room/check_username/',
+                        data: {
+                            'username': username
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            console.log(data);
+                            if (data.is_taken) {
+                                $('#id_login-text').text('Username is taken. Please choose another.');
+                            } else {
+                                $('#id_login-text').text('Username is available');
+                            }
+                        }
+                    });
+                } else {
+                    $('#id_login-text').text('Username length must be atleast 3');
+                }
+            });
+        });
+    </script>
+
+{% endblock content %}

@@ -1,27 +1,31 @@
-{% for group in chat_groups %}
-    <a class="C_chat_group" href="chat/{{group.name}}">
-        <p> {{group.name}} </p>
-        <a href="delete_group/{{group.name}}/"> delete </a>
-        <p></p>
-    </a>
-    
-{% endfor %}
+{% extends "chat/base.html" %}
 
-<form method="post" action="add_group/">
-    {% csrf_token %}
-    <div class="form-row">
-      <h2> Add Chat Group </h2>
-      <div class="col-md-6">
-        <input type="text" class="form-control" name="group_name" placeholder="Chat Group Name" required>
-      </div>
-      <div class="col-md-6">
-        <button type="submit" name="submit" class="btn btn-outline-primary">
-          Add
-        </button>
-      </div>
-    </div>
-</form>
+{% block content %}
+  {% for group in chat_groups %}
+        <a class="C_chat_group" href="chat/{{group.name}}">
+            <p> {{group.name}} </p>
+            <a href="delete_group/{{group.name}}/"> delete </a>
+            <p></p>
+        </a>
+        
+    {% endfor %}
 
-<script>
+    <form method="post" action="add_group/">
+        {% csrf_token %}
+        <div class="form-row">
+          <h2> Add Chat Group </h2>
+          <div class="col-md-6">
+            <input type="text" class="form-control" name="group_name" placeholder="Chat Group Name" required>
+          </div>
+          <div class="col-md-6">
+            <button type="submit" name="submit" class="btn btn-outline-primary">
+              Add
+            </button>
+          </div>
+        </div>
+    </form>
 
-</script>
+    <script>
+
+    </script>
+{% endblock content %}

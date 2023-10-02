@@ -1,0 +1,78 @@
+{% extends "chat/base.html" %}
+
+{% block content %}
+    <div class="C_chat-container" ng-app="chat_app" ng-controller="chat_ctrl">
+        <div class="C_chat-header">
+            {{group_name}}
+        </div>
+        <div class="C_chat-body" id="id_chat_log">
+            {% for msg in messages %}
+                <div  class="C_chat {% if username == msg.user %} C_chat-right {% endif %}">
+                    <p> {{msg.user}} </p>
+                    <p> {{msg.content}} </p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="C_chat-input">
+            <input type="text" id="id_message_input" placeholder="Type and Enter"/>
+            <div class="C_button" id="id_send_msg" >
+                send
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        const roomName = "{{group_name | safe}}";
+        console.log(roomName);
+
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            //let content = document.createElement('div');
+            var content = "";
+            if(data.user == "{{username}}") {
+                content = "<div class='C_chat C_chat-right'>" + data.user+ "<br>" + data.message + "</div> <br>";
+            } else {
+                 content = "<div class='C_chat'>" + data.user+ "<br>" + data.message + "</div> <br>";
+            }
+                
+            
+            //const div = document.querySelector('#id_chat_log');
+            //console.log(div);
+            //div.appendChild(content);
+            //console.log(data);
+            $("#id_chat_log").append(content)
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        /*document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.key === 'Enter') {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };*/
+
+        document.querySelector('#id_send_msg').onclick = function(e) {
+            const messageInputDom = document.querySelector('#id_message_input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'user': "{{request.user}}"
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+
+{% endblock content %}
