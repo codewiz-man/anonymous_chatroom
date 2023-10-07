@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-muu7fa1qee&#d!eh2hu!)n6+=!q2_ooyts5or%eaj0ml=2(pkr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*' ]
 
 SESSION_COOKIE_AGE = 600
 
@@ -33,7 +33,8 @@ SESSION_COOKIE_AGE = 600
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
+#    'daphne',
+    'channels',
     'chat',
 
     'django.contrib.admin',
@@ -81,7 +82,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'chat_project.wsgi.application'
+#WSGI_APPLICATION = 'chat_project.wsgi.application'
 ASGI_APPLICATION = "chat_project.asgi.application"
 
 

@@ -1,4 +1,5 @@
 venv/
 chat_project/chat_project/__pycache__
 chat_project/chat/__pycache__
+*.sqlite3
 *.pyc
