@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from chat.models import *
 from django.http import JsonResponse
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
 def get_username(request):
@@ -15,8 +15,8 @@ def get_username(request):
         username = request.POST['username']
         if username == '':
             return HttpResponse("Username is invalid")
-        if not User.objects.filter(username=username).exists():
-            user = User.objects.create(username=username)
+        if not ChatUser.objects.filter(username=username).exists():
+            user = ChatUser.objects.create(username=username)
             login(request, user)
             return redirect('/chat_room/')
         else:
@@ -28,7 +28,7 @@ def check_username(request):
     username = request.GET.get('username', None)
     if (username == '') or (username == None):
         return HttpResponse("Username is invalid")
-    data = {'is_taken': User.objects.filter(username=username).exists()}
+    data = {'is_taken': ChatUser.objects.filter(username=username).exists()}
     return JsonResponse(data)
 
 def chat_room(request, group_name):

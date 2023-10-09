@@ -1,4 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+class ChatUser(AbstractUser):
+    last_activity = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.username
+    
+
+
 
 class ChatGroup(models.Model):
     name = models.CharField(max_length=255)
