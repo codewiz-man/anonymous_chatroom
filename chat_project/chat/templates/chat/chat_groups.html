@@ -1,14 +1,23 @@
 {% extends "chat/base.html" %}
 
 {% block content %}
-  {% for group in chat_groups %}
-        <a class="C_chat_group" href="chat/{{group.name}}">
-            <p> {{group.name}} </p>
-            <a href="delete_group/{{group.name}}/"> delete </a>
-            <p></p>
-        </a>
-        
-    {% endfor %}
+    <h3 style="text-align: center;">
+      Chat Rooms
+    </h3>
+    <div>
+      {% for group in chat_groups %}
+          <a class="C_chat_group-link" href="chat/{{group.name}}">
+            <div class="C_chat_group">
+                <div> {{group.name}} </div>
+                {% if user == group.creator %}
+                    <a href="delete_group/{{group.name}}/"> delete </a>
+                {% endif %}
+                <!-- <div> {{active_conn_count}} users are active </div> -->
+            </div>
+            
+          </a> 
+      {% endfor %}
+    </div>
 
     <form method="post" action="add_group/">
         {% csrf_token %}
@@ -18,7 +27,7 @@
             <input type="text" class="form-control" name="group_name" placeholder="Chat Group Name" required>
           </div>
           <div class="col-md-6">
-            <button type="submit" name="submit" class="btn btn-outline-primary">
+            <button class="C_button" type="submit" name="submit" class="btn btn-outline-primary">
               Add
             </button>
           </div>

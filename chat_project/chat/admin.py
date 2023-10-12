@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import ChatUser
+from .models import *
 
 class ChatUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'last_name', 'last_activity', 'is_staff', 'is_active')
@@ -23,3 +23,5 @@ class ChatUserAdmin(UserAdmin):
 
 # Register the ChatUser model with the custom admin class
 admin.site.register(ChatUser, ChatUserAdmin)
+admin.site.register(ChatGroup)
+admin.site.register(Message)

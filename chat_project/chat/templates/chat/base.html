@@ -10,6 +10,7 @@
             margin: 10px;
             font-family: Arial;
             color: #323232;
+            background-color: #f0f0f0;
         }
     
         .C_chat-container {
@@ -41,7 +42,7 @@
     
         .C_chat {
             clear: both; white-space: nowrap; padding: 10px; background-color: #e0e0e0; 
-            border-radius: 10px; float: left; margin-bottom: 3px; max-width: 300px; height: auto;
+            border-radius: 10px; float: left; margin-bottom: 3px; max-width: 300px; height: auto; word-wrap: break-word
         }
         
         .C_chat-right {
@@ -54,20 +55,60 @@
         }
     
         .C_button {
-            min-width: 50px; max-width: 100px;
-            padding: 5px; background-color: #777; 
+            min-width: 50px; padding: 5px 20px 5px 20px; background-color: #707070; 
             color: #fff; letter-spacing: .5px; border-radius: 10px;
-            margin-left: 5px; margin-right: 5px; cursor: pointer;
+            margin-left: 5px; margin-right: 5px; cursor: pointer; min-height: 50px;
+        }
+
+        .C_button:hover {
+            opacity: .75;
+        }
+
+        .C_button-large {
+            min-width: 300px;
         }
 
         .C_main {
-            width: 100vw; height: auto; position: relative;
+            width: 100vw; height: auto; position: relative; letter-spacing: 0.5px; color: #222;
+        }
+
+        input[type=text] {
+            outline: none;
+            border: none;
+            padding: 15px 10px;
+            width: calc(100% - 40px);
+            margin: 5px 0px;
+            /*border-bottom: 1px solid #777;*/
+            border-radius: 10px;
         }
 
         @media only screen and (min-width: 640px) {
             .C_main {
                 width: 60vw; margin: auto;
             }
+        }
+
+        /* remove default button styles */
+        button, input[type="submit"], input[type="reset"] {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+        }
+
+        .C_container-1 {
+            margin-top: 30%;
+        }
+
+        .C_container-1-text2 {
+            font-size: 14px; color: rgb(71, 129, 255);
+        }
+
+        .C_chat_group {
+            width: 100%; min-height: 60px; background-color: #fff; border-radius: 5px; margin-bottom: 5px;
         }
     
     </style>

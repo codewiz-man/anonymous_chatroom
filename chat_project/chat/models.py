@@ -13,6 +13,7 @@ class ChatUser(AbstractUser):
 class ChatGroup(models.Model):
     name = models.CharField(max_length=255)
     #description = models.CharField(max_length=512, default="")
+    creator = models.ForeignKey(ChatUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
