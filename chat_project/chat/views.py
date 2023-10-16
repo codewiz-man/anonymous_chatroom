@@ -7,6 +7,8 @@ from django.http import JsonResponse
 #from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
+from .consumers import get_consumer_count
+
 def get_username(request):
     if request.method == "GET":
         return render(request, 'chat/get_username.html')
@@ -85,12 +87,14 @@ async def get_active_connections(group_name):
 def list_chat_groups(request):
     if not request.user.is_authenticated:
         return redirect('/chat_room/get_username/')
-    #groups = []
-    #for g in ChatGroup.objects.all():
-    #    g["active_conn_count"] = get_active_connections(g.name)
-    #    groups.append(g)
-    #return render(request, 'chat/chat_groups.html', {'chat_groups': groups})
-    return render(request, 'chat/chat_groups.html', {'chat_groups': ChatGroup.objects.all()})
+    groups = []
+    for g in ChatGroup.objects.all():
+        g = g.__dict__
+        g["active_conn_count"] = get_consumer_count(g['name'])
+        print(g)
+        groups.append(g)
+    return render(request, 'chat/chat_groups.html', {'chat_groups': groups})
+    #return render(request, 'chat/chat_groups.html', {'chat_groups': ChatGroup.objects.all()})
 
 
 def add_chat_group(request):

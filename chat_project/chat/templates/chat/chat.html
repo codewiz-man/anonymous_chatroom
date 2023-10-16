@@ -7,10 +7,21 @@
         </div>
         <div class="C_chat-body" id="id_chat_log">
             {% for msg in messages %}
-                <div  class="C_chat {% if username == msg.user %} C_chat-right {% endif %}">
-                    <p> {{msg.user}} </p>
-                    <p> {{msg.content}} </p>
-                </div>
+                {{msg.content_type}}
+                {% if msg.content_type == 'msg' %}
+                    <div  class="C_chat {% if username == msg.user %} C_chat-right {% endif %}">
+                        <p> {{msg.user}} </p>
+                        <p> {{msg.content}} </p>
+                    </div>
+                {% elif msg.content_type == 'user_add'  %}
+                    <div class="C_chat-info">
+                        <p> {{msg.user}} joined the chatroom </p>
+                    </div>
+                {% elif msg.content_type == 'user_remove'  %}
+                    <div class="C_chat-info">
+                        <p> {{msg.user}} has left the chatroom </p>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
         <div class="C_chat-input">
@@ -41,12 +52,17 @@
             console.log(data)
             //let content = document.createElement('div');
             var content = "";
-            if(data.user == "{{username}}") {
-                content = "<div class='C_chat C_chat-right'>" + data.user+ "<br>" + data.message + "</div> <br>";
-            } else {
-                 content = "<div class='C_chat'>" + data.user+ "<br>" + data.message + "</div> <br>";
+            if( data.content_type == 'user_add' ) {
+                content = "<div class='C_chat-info'>" + data.user+ " has joined the chatroom " + "</div>";
+            } else if(data.content_type == 'user_remove') {
+                content = "<div class='C_chat-info'>" + data.user+ " has left the chatroom " + "</div>";
+            } else if( data.content_type == 'msg' ) {
+                if(data.user == "{{username}}") {
+                    content = "<div class='C_chat C_chat-right'>" + data.user+ "<br>" + data.message + "</div> <br>";
+                } else {
+                    content = "<div class='C_chat'>" + data.user+ "<br>" + data.message + "</div> <br>";
+                }
             }
-                
             
             //const div = document.querySelector('#id_chat_log');
             //console.log(div);
