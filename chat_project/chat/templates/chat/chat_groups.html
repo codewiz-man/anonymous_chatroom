@@ -1,40 +1,85 @@
 {% extends "chat/base.html" %}
+{% load static %}
 
 {% block content %}
-    <h3 style="text-align: center;">
-      Chat Rooms
-    </h3>
+    <div class="C_header">
+      <!-- <div class="C_button_img">
+          <img src="{% static 'images/arrow_back.svg' %}">
+      </div> -->
+        <h3 style="text-align: center; width: 100%;">
+          Chat Rooms
+        </h3>
+    </div>
+    
     <div>
       {% for group in chat_groups %}
           <a class="C_chat_group-link" href="chat/{{group.name}}">
             <div class="C_chat_group">
-                <div> {{group.name}} </div>
-                {% if user == group.creator %}
-                    <a href="delete_group/{{group.name}}/"> delete </a>
-                {% endif %}
-                 <div> {{group.active_conn_count}} users are active </div> 
+                <div class="C_chat_group-left">
+                    <div class="C_button_img" style="">
+                        <img src="{% static 'images/groups.svg' %}">
+                    </div>
+                </div>
+                <div class="C_chat_group-right">
+                  <div class="C_chat_group-right-text-container"> 
+                    <div class="C_chat_group-right-text-top"> {{group.name}} {{group.creator_id}} </div>
+                    <div class="C_chat_group-right-text-bottom"> {{group.active_conn_count}} users are active </div>
+                  </div>
+                  {% if user.id == group.creator_id %}
+                        <a href="delete_group/{{group.name}}/" class="C_delete_group_link">
+                          <div class="C_button_img">
+                            <img src="{% static 'images/close.svg' %}">
+                          </div>
+                        </a>
+                    {% endif %} 
+                  
+                </div>
+                
+                
+                 
             </div>
             
           </a> 
       {% endfor %}
     </div>
+    <div class="C_button_img_round C_btn_float-rb" id="id_open_addgroup">
+        <img src="{% static 'images/add.svg' %}">
+    </div>
 
-    <form method="post" action="add_group/">
-        {% csrf_token %}
-        <div class="form-row">
-          <h2> Add Chat Group </h2>
-          <div class="col-md-6">
-            <input type="text" class="form-control" name="group_name" placeholder="Chat Group Name" required>
-          </div>
-          <div class="col-md-6">
-            <button class="C_button" type="submit" name="submit" class="btn btn-outline-primary">
-              Add
-            </button>
-          </div>
+    <div class="C_page_float" id="id_page_addgroup">
+      <div class="C_page-container">
+        <div class="C_header">
+            <div class="C_button_img" id="id_close_addgroup">
+                <img src="{% static 'images/arrow_back.svg' %}">
+            </div>
+            <div class="C_header-text">
+                Add Chat Group
+            </div>
         </div>
-    </form>
+        <form method="post" action="add_group/">
+            {% csrf_token %}
+            <div class="C_addgroup-container">
+              <!-- <h2> Add Chat Group </h2> -->
+              <br> <br> <br>
+              <div class="C_widget_input">
+                <input type="text" name="group_name" placeholder="Chat Group Name" required>
+              </div>
+              <button class="C_button" type="submit">
+                Add
+              </button>
+            </div>
+        </form>
+      </div>
+    </div>
+    
 
     <script>
+          $("#id_open_addgroup").click(function() {
+              $("#id_page_addgroup").show();
+          });
 
+          $("#id_close_addgroup").click(function() {
+              $("#id_page_addgroup").hide();
+          });
     </script>
 {% endblock content %}

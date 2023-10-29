@@ -1,5 +1,5 @@
 from audioop import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
 from chat.models import *
@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 
 from .consumers import get_consumer_count
+import json
 
 def get_username(request):
     if request.method == "GET":
@@ -58,6 +59,31 @@ def chat_room(request, group_name):
         'messages': msgs,
         'username': request.user
     })
+
+def download_chatlog(request):
+    
+    if request.method == "POST":
+        try:
+            #print(request.POST['chatlog'])
+            #print(request.body.decode('utf-8'))
+            data = json.loads(request.body.decode('utf-8'))
+            print(data)
+            #chatlog = data
+            #response = HttpResponse(data, content_type="application/json")
+            #response['Content-Disposition'] = 'inline; filename=chatlog.json'
+            #return response
+            #return JsonResponse(data, safe=False)
+            response_data = json.dumps(data)
+            response = HttpResponse(response_data, content_type='application/json')
+
+            # Set the content-disposition header to trigger a download prompt
+            response['Content-Disposition'] = 'attachment; filename="data.json"'
+
+            return response
+        except Exception as e:
+            print(e)
+            #raise Http404
+            return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync

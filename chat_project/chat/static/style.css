@@ -1,15 +1,37 @@
 body {
-    margin: 10px;
+    margin-left: 10px; margin-right: 10px; margin-top: 0;
     font-family: Arial;
     color: #323232;
     background-color: #f0f0f0;
 }
 
+.C_header {
+    /*background-color: green;*/
+    width: 100%;
+    height: 60px;
+    padding: 0px 0px;
+    position: relative;
+    display: inline-block;
+    position: relative;
+}
+
+.C_header * {
+    float: left;
+}
+
+.C_header-text {
+    /*background-color: blue;*/
+    text-align: center;
+    padding-top: 15px;
+    width: calc(100% - 150px);
+    font-weight: bold;
+}
+
 .C_chat-container {
     position: relative;
     display: inline-block;
-    width: calc(100% - 20px);
-    height: calc(100vh - 20px);
+    width: 100%;
+    height: 100%;
 }
 
 .C_chat-header {
@@ -20,32 +42,44 @@ body {
 }
 
 .C_chat-body {
-    width: 100%; height: calc(100vh - 120px); 
+    width: 100%; height: calc(100vh - 135px); overflow-y: auto;
 }
 
 .C_chat-input {
-    height: 50px; position: relative;
+    height: 60px; position: relative; width: 100%;
 }
 
-.C_chat-input * {
+.C_chat-input input, .C_chat-input .C_button_img {
     float: left;
-    border-radius: 10px;
+}
+.C_chat-input input {
+    width: calc(100% - 75px) !important; 
+}
+
+.C_chat-input .C_button_img {
+    border-radius: 50%; background-color: #d0d0d0; margin-left: 5px; margin-top: 3px;
 }
 
 .C_chat {
-    clear: both; white-space: nowrap; padding: 10px; background-color: #e0e0e0; 
-    border-radius: 10px; float: left; margin-bottom: 3px; max-width: 300px; height: auto; word-wrap: break-word
+    clear: both; padding: 5px 10px; background-color: #e0e0e0; 
+    border-radius: 10px; float: left; margin-bottom: 3px; max-width: 300px; height: auto; 
+}
+
+.C_chat-text-top {
+    font-weight: bold; font-size: 14px;
 }
 
 .C_chat-right {
     float: right !important;
-    background-color: #645678; color: #fff;
+    background-color: #4781ff4b; color: #323232;
 }
 
 .C_chat-info {
-    width: auto;
-    padding: 3px;
-    background-color: plum; border-radius: 5px; position: relative; clear: both;
+    text-align: center; white-space: nowrap; word-wrap: break-word;
+    width: auto; padding: 5px; max-width: 300px;
+    margin-bottom: 5px; font-size: 14px;
+    background-color: #d0d0d0;  color:#323232;
+    border-radius: 5px; clear: both; margin-left: auto; margin-right: auto;
 }
 
 input[type=text] {
@@ -53,9 +87,9 @@ input[type=text] {
 }
 
 .C_button {
-    min-width: 50px; padding: 5px 20px 5px 20px; background-color: #707070; 
-    color: #fff; letter-spacing: .5px; border-radius: 10px;
-    margin-left: 5px; margin-right: 5px; cursor: pointer; min-height: 50px;
+    min-width: 50px; padding: 5px 5px 5px 5px; background-color: #707070; 
+    color: #fff; letter-spacing: .5px; border-radius: 10px; min-width: 100px;
+    margin-left: 5px; margin-right: 5px; cursor: pointer; min-height: 45px;
 }
 
 .C_button:hover {
@@ -66,8 +100,46 @@ input[type=text] {
     min-width: 300px;
 }
 
+.C_button_img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.C_button_img:hover {
+    opacity: 0.5;
+}
+
+.C_button_img:active {
+    opacity: 0.5;
+}
+
+.C_button_img_round {
+    width: 45px;
+    height: 45px;
+    background-color: #4781ff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #323232;
+}
+
+.C_button_img_round img {
+    width: 25px;
+    height: 25px;
+    padding: 10px 10px;
+    float: left;
+}
+ 
+.C_button_img img {
+    width: 30px;
+    height: 30px;
+    padding: 10px 10px;
+    float: left;
+    position: relative;
+    fill: #434343;
+}
+
 .C_main {
-    width: 100vw; height: auto; position: relative; letter-spacing: 0.5px; color: #222;
+    width: calc(100vw - 20px); height: auto; position: relative; letter-spacing: 0.5px; color: #222;
 }
 
 input[type=text] {
@@ -83,6 +155,10 @@ input[type=text] {
 @media only screen and (min-width: 640px) {
     .C_main {
         width: 60vw; margin: auto;
+    }
+
+    .C_page-container {
+        width: 60% !important; margin: auto !important;
     }
 }
 
@@ -102,9 +178,74 @@ button, input[type="submit"], input[type="reset"] {
 }
 
 .C_container-1-text2 {
-    font-size: 14px; color: rgb(71, 129, 255);
+    font-size: 14px; color: #4781ff;
 }
 
 .C_chat_group {
-    width: 100%; min-height: 60px; background-color: #fff; border-radius: 5px; margin-bottom: 5px;
+    width: 100%; min-height: 70px; background-color: #f0f0f0; border-radius: 5px;
+    position: relative; padding: 5px;
+}
+
+.C_chat_group:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.C_chat_group-left {
+    float: left; width: 70px;
+}
+
+.C_chat_group-left .C_button_img {
+    margin-top: 10px; background-color: #e0e0e0; border-radius: 50%;
+}
+
+.C_chat_group-right {
+    float: left; width: calc(100% - 80px);
+}
+
+.C_chat_group-right-text-container {
+    float: left; width: calc(100% - 50px);
+}
+
+.C_chat_group-right-text-top {
+    margin-top: 15px; color: #222; font-weight: bold; position: relative;
+}
+
+.C_chat_group-right-text-bottom {
+    color: #535353; font-size: 13px; margin-top: 3px; position: relative;
+}
+
+.C_chat_group-right .C_delete_group_link {
+    float: right;
+}
+
+.C_btn_float-rb {
+    position: fixed;
+    right: 5px; bottom: 5px; cursor: pointer;
+}
+
+.C_page_float {
+    position: fixed;
+    width: 100%; left: 0; top: 0; right: 50px; bottom: 0;
+    z-index: 2; background-color: #fff; display: none;
+}
+
+.C_page-container {
+    position: relative; padding: 5px;
+    width: calc(100% - 10px); height: calc(100% - 10px); margin: 0;
+}
+
+.C_page-container .C_widget_input {
+    margin-left: 5px;
+}
+
+.C_addgroup-container {
+    position: relative;
+}
+
+.C_addgroup-container input[type=text] {
+    background-color: #f0f0f0;
+}
+
+.C_addgroup-container div {
+    margin-bottom: 10px;
 }

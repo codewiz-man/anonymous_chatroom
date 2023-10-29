@@ -11,5 +11,6 @@ urlpatterns = [
     path('check_username/', views.check_username, name='check_username'),
     path('chat/<str:group_name>/', views.chat_room, name='chat'),
     path('add_group/', views.add_chat_group, name="add_group"),
-    path('delete_group/<str:group_name>/', views.delete_chat_group, name="delete_group" )
+    path('delete_group/<str:group_name>/', views.delete_chat_group, name="delete_group" ),
+    path('download_chatlog/', views.download_chatlog, name="download_chatlog"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

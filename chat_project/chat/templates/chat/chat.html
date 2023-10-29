@@ -1,17 +1,31 @@
 {% extends "chat/base.html" %}
+{% load static %}
 
 {% block content %}
     <div class="C_chat-container" ng-app="chat_app" ng-controller="chat_ctrl">
-        <div class="C_chat-header">
+        <div class="C_header">
+            <a href="/chat_room/">
+                <div class="C_button_img C_back_btn">
+                    <img src="{% static 'images/arrow_back.svg' %}">
+                </div>
+            </a>
+              <div style="" class="C_header-text">
+                {{group_name}}
+              </div>
+            <div class="C_button_img C_download_chatlog">
+                <img src="{% static 'images/send_and_archive.svg' %}">
+            </div>
+          </div>
+        <!-- <div class="C_chat-header">
             {{group_name}}
-        </div>
+        </div> -->
         <div class="C_chat-body" id="id_chat_log">
             {% for msg in messages %}
                 {{msg.content_type}}
                 {% if msg.content_type == 'msg' %}
                     <div  class="C_chat {% if username == msg.user %} C_chat-right {% endif %}">
-                        <p> {{msg.user}} </p>
-                        <p> {{msg.content}} </p>
+                        <span class="C_chat-text-top"> {{msg.user}} </span> <br>
+                        <span class="C_chat-text-bottom"> {{msg.content}} </span>
                     </div>
                 {% elif msg.content_type == 'user_add'  %}
                     <div class="C_chat-info">
@@ -26,8 +40,8 @@
         </div>
         <div class="C_chat-input">
             <input type="text" id="id_message_input" placeholder="Type and Enter"/>
-            <div class="C_button" id="id_send_msg" >
-                send
+            <div class="C_button_img" id="id_send_msg" >
+                <img src="{% static 'images/send.svg' %}">  
             </div>
             
         </div>
@@ -36,6 +50,8 @@
     <script>
         const roomName = "{{group_name | safe}}";
         console.log(roomName);
+        let chat_log = JSON.parse( "{{ messages | safe}}" );
+        console.log(chat_log);
 
 
         const chatSocket = new WebSocket(
@@ -58,17 +74,22 @@
                 content = "<div class='C_chat-info'>" + data.user+ " has left the chatroom " + "</div>";
             } else if( data.content_type == 'msg' ) {
                 if(data.user == "{{username}}") {
-                    content = "<div class='C_chat C_chat-right'>" + data.user+ "<br>" + data.message + "</div> <br>";
+                    content = "<div class='C_chat C_chat-right'> <span class='C_chat-text-top'>" + data.user+ "</span> <br> <span class='C_chat-text-bottom'>" + 
+                        data.message + " </span> </div>";
                 } else {
-                    content = "<div class='C_chat'>" + data.user+ "<br>" + data.message + "</div> <br>";
+                    content = "<div class='C_chat'> <span class='C_chat-text-top'>" + data.user+ "</span> <br> <span class='C_chat-text-bottom'>" + 
+                        data.message + " </span> </div>";
                 }
             }
+            chat_log.push(data);
+            $(".C_chat-body").animate({scrollTop: $(".C_chat-body")[0].scrollHeight}, 500);
+
             
             //const div = document.querySelector('#id_chat_log');
             //console.log(div);
             //div.appendChild(content);
             //console.log(data);
-            $("#id_chat_log").append(content)
+            $("#id_chat_log").append(content);
         };
 
         chatSocket.onclose = function(e) {
@@ -85,12 +106,76 @@
         document.querySelector('#id_send_msg').onclick = function(e) {
             const messageInputDom = document.querySelector('#id_message_input');
             const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'user': "{{request.user}}"
-            }));
-            messageInputDom.value = '';
+            if(message != "") {
+                chatSocket.send(JSON.stringify({
+                    'message': message,
+                    'user': "{{request.user}}"
+                }));
+                messageInputDom.value = '';
+            }  
         };
+
+        $("#id_message_input").on ("keypress", function (e) {
+            //console.log(e.which);
+            if(e.which == 13) {
+                //alert('You pressed enter!');
+                $("#id_send_msg").click();
+            }
+        });
+
+        function getCookie(c_name) {
+            if(document.cookie.length > 0) {
+                c_start = document.cookie.indexOf(c_name + "=");
+                if(c_start != -1) {
+                    c_start = c_start + c_name.length + 1;
+                    c_end = document.cookie.indexOf(";", c_start);
+                    if(c_end == -1) c_end = document.cookie.length;
+                    return unescape(document.cookie.substring(c_start,c_end));
+                }
+            }
+            return "";
+        }
+
+        $(".C_download_chatlog").click(function() {
+            /*$.ajax({
+                type: "POST",
+                url: "/chat_room/download_chatlog/",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken")
+                },
+                data: JSON.stringify(chat_log),
+                contentType: 'application/json',
+                success: function(html) {
+                    //alert("Downloading Chat Logs...");
+                    //console.log(html);
+                }
+            });*/
+
+            // Convert JSON data to a string
+            var jsonString = JSON.stringify(chat_log);
+
+            // Create a Blob from the JSON data
+            var blob = new Blob([jsonString], { type: "application/json" });
+
+            // Create a URL for the Blob
+            var url = URL.createObjectURL(blob);
+
+            // Create a download link
+            var downloadLink = document.createElement("a");
+            downloadLink.href = url;
+            downloadLink.download = "chatlog.json";
+            downloadLink.style.display = "none";
+
+            // Add the download link to the document
+            document.body.appendChild(downloadLink);
+
+            // Trigger a click event to initiate the download
+            downloadLink.click();
+
+            // Clean up resources
+            URL.revokeObjectURL(url);
+            document.body.removeChild(downloadLink);
+        });
     </script>
 
 {% endblock content %}
