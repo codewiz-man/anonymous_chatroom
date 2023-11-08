@@ -16,6 +16,7 @@ This project is an Anonymous Chat Room application with a client-side interface 
 - Send and receive messages in real-time.
 - WebSocket-based communication with Django Channels.
 - Simple and intuitive user interface.
+- Download the chat-log.
 
 ## Requirements
 
@@ -30,66 +31,60 @@ This project is an Anonymous Chat Room application with a client-side interface 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/anonymous-chat-room.git
-   cd anonymous-chat-room
+   git clone https://github.com/codewiz-man/anonymous_chatroom.git
+   cd anonymous_chatroom 
+    ```
 
+2. Install Python and required packages:
+    ```bash
+    pip install -r requirements.txt
+    ```
+    
+3. Apply database migrations:
 
-git clone https://github.com/yourusername/anonymous-chat-room.git
-cd anonymous-chat-room
+    ```bash
+    python manage.py migrate
+    ```
 
-Install Python and required packages:
+4. Start Cronjob to remove inactive users:
+    ```bash
+    python manage.py runcrons
+    ```
 
-bash
-
-pip install -r requirements.txt
-
-Apply database migrations:
-
-bash
-
-python manage.py migrate
-
-Start the WebSocket server:
-
-bash
-
+5. Start the WebSocket server:
+    ```bash
     python manage.py runserver
+    ```
 
-Usage
+## Usage
 
-    Open your web browser and navigate to http://localhost:8000 (or the URL where your server is running).
+Open your web browser and navigate to http://localhost:8000/chat_room/ (or the URL where your server is running).
 
-    Join a chat room by entering a room name and a display name.
+Join a chat room by entering a room name and a display name.
 
-    Start chatting! Messages are sent and received in real-time using WebSockets.
+Start chatting! Messages are sent and received in real-time using WebSockets.
 
-Contributing
+## Contributing
 
 Contributions are welcome! If you would like to improve this project, please follow these steps:
 
-    Fork the repository.
+Fork the repository.
 
-    Create a new branch for your feature or bug fix:
+Create a new branch for your feature or bug fix:
 
-    bash
-
-git checkout -b feature/new-feature
+    git checkout -b feature/new-feature
 
 Make your changes and commit them:
 
-bash
-
-git commit -m "Add new feature"
+    git commit -m "Add new feature"
 
 Push your changes to your fork:
 
-bash
-
     git push origin feature/new-feature
 
-    Create a pull request.
+Create a pull request.
 
-License
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 

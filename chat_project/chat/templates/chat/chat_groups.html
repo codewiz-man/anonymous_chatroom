@@ -23,7 +23,9 @@
                 <div class="C_chat_group-right">
                   <div class="C_chat_group-right-text-container"> 
                     <div class="C_chat_group-right-text-top"> {{group.name}} {{group.creator_id}} </div>
-                    <div class="C_chat_group-right-text-bottom"> {{group.active_conn_count}} users are active </div>
+                    <div class="C_chat_group-right-text-bottom"> {{group.active_conn_count}} users are active 
+                      <span class="C_chat_group-active"></span>
+                    </div>
                   </div>
                   {% if user.id == group.creator_id %}
                         <a href="delete_group/{{group.name}}/" class="C_delete_group_link">

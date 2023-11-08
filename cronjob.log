@@ -1,0 +1,4 @@
+Running Crons
+========================================
+deleting inactive users
+[✔] chat.cleanup_inactive_users_cron_job

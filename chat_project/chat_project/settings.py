@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*' ]
 
-SESSION_COOKIE_AGE = 600
+SESSION_COOKIE_AGE = 60000
 
 
 # Application definition
@@ -144,6 +144,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'chat.ChatUser'
 
 CRON_CLASSES = [
- 
     'chat.cron.CleanupInactiveUsersCronJob',
 ]
