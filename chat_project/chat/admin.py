@@ -25,3 +25,5 @@ class ChatUserAdmin(UserAdmin):
 admin.site.register(ChatUser, ChatUserAdmin)
 admin.site.register(ChatGroup)
 admin.site.register(Message)
+
+
