@@ -46,12 +46,7 @@ This project is an Anonymous Chat Room application with a client-side interface 
     python manage.py migrate
     ```
 
-4. Start Cronjob to remove inactive users:
-    ```bash
-    python manage.py runcrons
-    ```
-
-5. Start the WebSocket server:
+4. Start the WebSocket server:
     ```bash
     python manage.py runserver
     ```

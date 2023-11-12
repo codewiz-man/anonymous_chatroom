@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*' ]
 
-SESSION_COOKIE_AGE = 60000
+# 72 hours
+SESSION_COOKIE_AGE = 3 * 24 * 3600 
 
 
 # Application definition
